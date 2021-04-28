@@ -1,19 +1,14 @@
 package jp.ac.titech.itpro.sdl.hilbert_kotlin
 
-import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 
 import android.os.Bundle
-import android.util.Log
-import android.view.ActionMode
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
 
-    private val TAG: String = "MainActivity"
-    private val KEY_NAME: String = "MainActivity.name"
+    private val KEY_NAME: String = "order.name"
 
     private val MAX_ORDER: Int = 9
     private var order: Int = 1
@@ -26,6 +21,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        if (savedInstanceState != null) {
+            order = savedInstanceState.getInt(KEY_NAME)
+        }
 
         orderView = findViewById(R.id.order_view)
         hilbertView = findViewById(R.id.hilbert_view)
@@ -62,5 +61,10 @@ class MainActivity : AppCompatActivity() {
         if (!f) {
             throw AssertionError(message)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(KEY_NAME, order)
     }
 }
